@@ -1,25 +1,32 @@
-import logo from './logo.svg';
+import React from "react";
+import { Controller, useForm } from "react-hook-form";
 import './App.css';
+const App=()=>{
+  const {control, handleSubmit, getValues}=useForm();
+  const onSubmit=(data)=>{
+    console.log(data);
+  };
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  return(
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Controller
+        name="firstName"
+        control={control}
+        defaultValue=""
+        render={({ field }) => <input {...field} placeholder="First Name" />}
+      />   
+      <Controller
+      name="lastName"
+      control={control}
+      defaultValue=""
+      render={({ field }) => <input {...field} placeholder="Last Name" />}
+      />   
+      <button type="submit">Submit</button>
+      <div>
+        <h2>Form Values</h2>
+        <pre>{JSON.stringify(getValues(), null,2)}</pre>
+      </div>
+    </form>
   );
-}
-
+};
 export default App;
